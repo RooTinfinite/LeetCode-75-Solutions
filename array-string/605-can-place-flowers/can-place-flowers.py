@@ -1,18 +1,28 @@
 class Solution:
     def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
-        count = 0
-        for i in range(len(flowerbed)):
-            # Check if the current plot is empty.
+        f_length = len(flowerbed)
+        if n == 0: return True
+        if f_length == 1: return (not flowerbed[0])
+        for i in range(f_length):
             if flowerbed[i] == 0:
-                # Check if the left and right plots are empty.
-                empty_left_plot = (i == 0) or (flowerbed[i - 1] == 0)
-                empty_right_lot = (i == len(flowerbed) - 1) or (flowerbed[i + 1] == 0)
-                
-                # If both plots are empty, we can plant a flower here.
-                if empty_left_plot and empty_right_lot:
-                    flowerbed[i] = 1
-                    count += 1
-                    if count >= n:
-                        return True
-                    
-        return count >= n
+                if i == 0:
+                    if flowerbed[i] == 0 and flowerbed[i+1] == 0:
+                        n -= 1
+                        flowerbed[i] = 1
+                        #print(f'{flowerbed} i:{i}')
+                elif i == f_length - 1:
+                    if flowerbed[f_length-2] == 0 and flowerbed[f_length-1] == 0:
+                        n -= 1
+                        flowerbed[i] = 1
+                        #print(f'{flowerbed} i:{i}')
+                else:
+                    if flowerbed[i-1] == 0 and flowerbed[i+1] == 0:
+                        n -= 1
+                        flowerbed[i] = 1
+                        #print(f'{flowerbed} i:{i}')
+
+        #print(flowerbed)
+        if n <= 0: return True
+        else: return False
+
+        

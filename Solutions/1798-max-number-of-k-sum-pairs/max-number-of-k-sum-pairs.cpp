@@ -1,17 +1,35 @@
 class Solution {
 public:
-	int maxOperations(vector<int>& nums, int k) {
-		unordered_map<int, int> m;
-		int ans = 0;
-		for(int i = 0; i < nums.size(); i++){
-			if(m[k - nums[i]] > 0){
-			   m[k - nums[i]]--;
-				ans++;
-			}
-			else{
-				m[nums[i]]++;
-			}
-		}
-		return ans;
-	}
+Solution()
+    {
+        ios_base::sync_with_stdio(false); 
+        cin.tie(NULL); 
+        cout.tie(NULL);
+        
+    }
+    int maxOperations(vector<int>& nums, int k) {
+
+        sort(nums.begin(),nums.end());
+        int start=0;
+        int end=nums.size()-1;
+        int count =0;
+
+        while(start<end){
+
+            if(nums[start]+nums[end]==k){
+                start++;
+                end--;
+                count++;
+            }
+            else if(nums[start]+nums[end]<k){
+                start++;
+            }
+            else if(nums[start]+nums[end]>k){
+                end--;
+            }
+
+        }
+        return count;
+        
+     }
 };

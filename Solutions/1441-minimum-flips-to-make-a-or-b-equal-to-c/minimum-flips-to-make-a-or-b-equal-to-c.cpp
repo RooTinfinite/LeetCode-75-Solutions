@@ -1,25 +1,30 @@
 class Solution {
 public:
-    int minFlips(int a, int b, int c) {
-        int flips = 0;
-        while (a > 0 || b > 0 || c > 0) {
-            int bitA = a & 1;
-            int bitB = b & 1;
-            int bitC = c & 1;
 
-            if (bitC == 0) {
-                flips += (bitA + bitB); 
-            } else {
-                if (bitA == 0 && bitB == 0) {
-                    flips += 1; 
-                }
-            }
+int minFlips(int a, int b, int c)
+{
+    int nChanges = 0;
+    int nMask = 1;
+    for (int i = 0; i < sizeof(int) * 8; i++, nMask <<= 1)
+    {
+        int nARes = a & nMask;
+        int nBRes = b & nMask;
+        int nCRes = c & nMask;
 
-            a >>= 1;
-            b >>= 1;
-            c >>= 1;
+        if (nCRes == 0)
+        {
+            nChanges += (nARes != 0) + (nBRes != 0);
         }
-
-        return flips;
+        else // '1'
+        {
+            nChanges += (nARes + nBRes == 0) ? 1 : 0;
+        }
+        
     }
+    return nChanges;
+}
+
+
+
+
 };
